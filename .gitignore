@@ -1,3 +1,5 @@
+*.DS_Store
+
 # Prerequisites
 *.d
 
@@ -50,3 +52,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#image files
+*.ppm
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+#temp files
+*~

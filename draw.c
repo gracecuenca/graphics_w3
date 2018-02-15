@@ -7,11 +7,11 @@
 #include "matrix.h"
 
 /*======== void add_point() ==========
-Inputs:   struct matrix * points
+Inputs:  struct matrix * points
          int x
          int y
-         int z 
-Returns: 
+         int z
+Returns:
 adds point (x, y, z) to points and increment points.lastcol
 if points is full, should call grow on points
 ====================*/
@@ -21,20 +21,20 @@ void add_point( struct matrix * points, double x, double y, double z) {
 /*======== void add_edge() ==========
 Inputs:   struct matrix * points
           int x0, int y0, int z0, int x1, int y1, int z1
-Returns: 
+Returns:
 add the line connecting (x0, y0, z0) to (x1, y1, z1) to points
 should use add_point
 ====================*/
-void add_edge( struct matrix * points, 
-	       double x0, double y0, double z0, 
+void add_edge( struct matrix * points,
+	       double x0, double y0, double z0,
 	       double x1, double y1, double z1) {
 }
 
 /*======== void draw_lines() ==========
 Inputs:   struct matrix * points
          screen s
-         color c 
-Returns: 
+         color c
+Returns:
 Go through points 2 at a time and call draw_line to add that line
 to the screen
 ====================*/
@@ -42,46 +42,148 @@ void draw_lines( struct matrix * points, screen s, color c) {
 }
 
 
+//draw_line
+void draw_line(int x0, int y0, int x1, int y1, screen s, color c){
+  //if the slope is underfined ie. vertical line
+  if(x0 == x1){
+    if(y1 > y0){
+      vertical(x0,y0,x1,y1,s,c);
+    }
+    else{
+      vertical(x1,y1,x0,y0,s,c);
+    }
+  }
+  //normal stuff
+  else{
+    double m = slope(x0,y0,x1,y1);
+    if(x0 < x1){
+      //octI
+      if(m >= 0 && m <= 1){
+        oct_one(x0,y0,x1,y1,s,c);
+      }
+      //octII
+      else if(m > 1){
+        oct_two(x0,y0,x1,y1,s,c);
+      }
+      //octVIII
+      else if(m < 0 && m >= -1){
+        oct_eight(x0,y0,x1,y1,s,c);
+      }
+      //octVII
+      else {
+        oct_seven(x0,y0,x1,y1,s,c);
+      }
+    }
+    else{
+      //octV
+      if(m >= 0 && m <= 1){
+        oct_one(x1,y1,x0,y0,s,c);
+      }
+      //octVI
+      else if(m > 1){
+        oct_two(x1,y1,x0,y0,s,c);
+      }
+      //octIV
+      else if(m < 0 && m >= -1){
+        oct_eight(x1,y1,x0,y0,s,c);
+      }
+      //octIII
+      else {
+        oct_seven(x1,y1,x0,y0,s,c);
+      }
+    }
+  }
+}
 
+//SLOPE
+double slope(int x0, int y0, int x1, int y1){
+  return (1.0*(y1-y0))/(1.0*(x1-x0));
+}
 
+//OCTANT I
+void oct_one(int x0, int y0, int x1, int y1, screen s, color c){
+  int x = x0;
+  int y = y0;
+  int A = y1 - y;
+  int B = -(x1 - x);
+  int d = 2*A + B;
 
-void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
+  while(x <= x1){
+    plot(s,c,x,y);
+    if(d > 0){
+      y++;
+      d+=2*B;
+    }
+    x++;
+    d+=2*A;
+  }
+}
 
-  int x, y, d, A, B;
-  //swap points if going right -> left
-  int xt, yt;
-  if (x0 > x1) {
-    xt = x0;
-    yt = y0;
-    x0 = x1;
-    y0 = y1;
-    x1 = xt;
-    y1 = yt;
+//OCTANT II
+void oct_two(int x0, int y0, int x1, int y1, screen s, color c){
+  int x = x0;
+  int y = y0;
+  int A = y1 - y;
+  int B = -(x1 - x);
+  int d = A + 2*B;
+
+  while(y <= y1){
+    plot(s,c,x,y);
+    if(d < 0){
+      x++;
+      d+=2*A;
+    }
+    y++;
+    d+=2*B;
+  }
+}
+
+//OCTANT VII
+void oct_seven(int x0, int y0, int x1, int y1, screen s, color c){
+  int x = x0;
+  int y = y0;
+  int A = y1 - y;
+  int B = -(x1 - x);
+  int d = A - 2*B;
+
+  while(y >= y1){
+    plot(s,c,x,y);
+    if(d > 0){
+      x++;
+      d+=2*A;
+    }
+    y--;
+    d-=2*B;
+  }
+}
+
+//OCTANT VIII
+void oct_eight(int x0, int y0, int x1, int y1, screen s, color c){
+  int x = x0;
+  int y = y0;
+  int A = y1 - y;
+  int B = -(x1 - x);
+  int d = 2*A - B;
+
+  while(x <= x1){
+    plot(s,c,x,y);
+    if(d < 0){
+      y--;
+      d-=2*B;
+    }
+    x++;
+    d+=2*A;
+  }
+}
+
+//VERTICAL LINE! SEPARATED INTO SEPARATE FXN
+void vertical(int x0, int y0, int x1, int y1, screen s, color c){
+  int x = x0;
+  int y = y0;
+
+  while(y <= y1){
+    plot(s,c,x,y);
+    y++;
   }
 
-  x = x0;
-  y = y0;
-  A = 2 * (y1 - y0);
-  B = -2 * (x1 - x0);
-
-  //octant 1
-  if ( abs(x1 - x0) >= abs(y1 - y0) ) {
-
-    //octant 1
-    if ( A > 0 ) {
-      d = A + B/2; //not really division since B = 2B
-
-      while ( x < x1 ) {
-        plot( s, c, x, y );
-        if ( d > 0 ) {
-          y+= 1;
-          d+= B;
-        }
-        x++;
-        d+= A;
-      } //end octant 1 while
-      plot( s, c, x1, y1 );
-    } //end octant 1
-  }
-
-} //end draw_line
+}

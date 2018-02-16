@@ -14,6 +14,12 @@ int main() {
   struct matrix *edges;
 
   edges = new_matrix(4, 4);
+  add_point(edges, 50.0, 50.0, 0.0);
+  add_point(edges, 100.0, 50.0, 0.0);
+  add_point(edges, 100.0, 100.0, 0.0);
+  add_point(edges, 50.0, 100.0, 0.0);
+
+  print_matrix(edges);
 
   draw_lines(edges, s, c);
   display(s);

@@ -32,12 +32,15 @@ int main() {
   printf("===== testing matrix * edges printing =====\n");
   print_matrix(edges);
 
-  draw_lines(edges, s, c);
-  display(s);
-
   printf("===== testing matrix multiplication: edges * =====\n");
 
   printf("===== testing identity matrix =====\n");
+
+  printf("===== testing printing matrix =====\n");
+
+  draw_lines(edges, s, c);
+  display(s);
+
 
 
   free_matrix(edges);

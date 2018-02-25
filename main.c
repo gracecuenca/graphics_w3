@@ -9,14 +9,6 @@
 
 int main() {
 
-  screen s;
-  clear_screen(s);
-
-  color c;
-  c.red = 255;
-  c.green = 255;
-  c.blue = 255;
-
   printf("===== matrix * edges created =====\n");
   printf("===== matrix * mult created =====\n");
   printf("===== matrix * other created =====\n");
@@ -71,13 +63,112 @@ int main() {
   print_matrix(mult);
 
   printf("===== generating image!=====\n");
-  //draw_lines(edges, s, c);
   //BELIEVER -- IMAGINE DRAGONS
 
-  //orange pillar 
+  screen s;
+  clear_screen(s);
+
+  //white
+  color c;
+  c.red = 255;
+  c.green = 255;
+  c.blue = 255;
+
+  //grid
+  struct matrix * grid = new_matrix(4,12);
+
+  //horizontal lines
+  add_edge(grid,0.0,450.0,0.0,500.0,450.0,0.0);
+  add_edge(grid,0.0,400.0,0.0,500.0,400.0,0.0);
+  add_edge(grid,0.0,350.0,0.0,500.0,350.0,0.0);
+  add_edge(grid,0.0,300.0,0.0,500.0,300.0,0.0);
+  add_edge(grid,0.0,250.0,0.0,500.0,250.0,0.0);
+
+  //vertical lines
+  add_edge(grid,50.0,500.0,0.0,50.0,230.0,0.0);
+  add_edge(grid,100.0,500.0,0.0,100.0,230.0,0.0);
+  add_edge(grid,150.0,500.0,0.0,150.0,230.0,0.0);
+  add_edge(grid,200.0,500.0,0.0,200.0,230.0,0.0);
+  add_edge(grid,250.0,500.0,0.0,250.0,230.0,0.0);
+  add_edge(grid,300.0,500.0,0.0,300.0,230.0,0.0);
+  add_edge(grid,350.0,500.0,0.0,350.0,230.0,0.0);
+  add_edge(grid,400.0,500.0,0.0,400.0,230.0,0.0);
+  add_edge(grid,450.0,500.0,0.0,450.0,230.0,0.0);
+
+  draw_lines(grid, s, c);
+
+  //pillars
+
+  //orange pillar
+  struct matrix * o_pillar = new_matrix(4,4);
+  c.red = 231;
+  c.green = 154;
+  c.blue = 40;
+
+  double x = 175.0;
+  while(x < 220.0){
+    add_edge(o_pillar, x,500.0,0.0,x,230.0,0.0);
+    x+=1.0;
+  }
+
+  draw_lines(o_pillar,s,c);
+
+  //green pillar
+  struct matrix * g_pillar = new_matrix(4,4);
+  c.red = 39;
+  c.green = 228;
+  c.blue = 183;
+
+  x = 227.0;
+  while(x < 272.0){
+    add_edge(g_pillar, x,500.0,0.0,x,230.0,0.0);
+    x+=1.0;
+  }
+
+  draw_lines(g_pillar,s,c);
+
+  //blue pillar
+  struct matrix * b_pillar = new_matrix(4,4);
+  c.red = 96;
+  c.green = 226;
+  c.blue = 217;
+
+  x = 280.0;
+  while(x < 325.0){
+    add_edge(b_pillar, x,500.0,0.0,x,230.0,0.0);
+    x+=1.0;
+  }
+
+  draw_lines(b_pillar,s,c);
+
+  //mountains
+  struct matrix* mountains = new_matrix(4,4);
+  c.red = 140;
+  c.green = 86;
+  c.blue = 86;
+
+  add_edge(mountains,50.0,100.0,0.0,150.0,200.0,0.0);
+  add_edge(mountains,150.0,200.0,0.0,125.0,100.0,0.0);
+  add_edge(mountains,150.0,200.0,0.0,250.0,100.0,0.0);
+
+  add_edge(mountains,200.0,200.0,0.0,300.0,300.0,0.0);
+  add_edge(mountains,300.0,300.0,0.0,275.0,200.0,0.0);
+  add_edge(mountains,300.0,300.0,0.0,400.0,200.0,0.0);
+
+  add_edge(mountains,300.0,150.0,0.0,400.0,250.0,0.0);
+  add_edge(mountains,400.0,250.0,0.0,375.0,150.0,0.0);
+  add_edge(mountains,400.0,250.0,0.0,500.0,150.0,0.0);
+
+  draw_lines(mountains,s,c);
+
   display(s);
 
   free_matrix(edges);
   free_matrix(mult);
   free_matrix(other);
+  free_matrix(grid);
+  free_matrix(o_pillar);
+  free_matrix(b_pillar);
+  free_matrix(g_pillar);
+  free_matrix(mountains);
 }

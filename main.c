@@ -19,6 +19,7 @@ int main() {
 
   printf("===== matrix * edges created =====\n");
   printf("===== matrix * mult created =====\n");
+  printf("===== matrix * other created =====\n");
   struct matrix *edges;
   struct matrix *mult;
   struct matrix *other;
@@ -32,36 +33,48 @@ int main() {
   add_point(other, 50.0,50.0,0.0);
   add_point(other, 0.0,50.0,0.0);
 
-  printf("===== printing matrix * other =====\n");
+  printf("===== printing matrix * other =====");
   print_matrix(other);
 
   printf("===== turning matrix * other to identity matrix =====\n");
   ident(other);
 
-  printf("===== printing matrix * other =====\n");
+  printf("===== printing matrix * other =====");
   print_matrix(other);
 
   printf("===== adding point to matrix * mult =====\n");
   add_point(mult, 1.0, 3.0, 0.0);
 
-  printf("===== adding edges to matrix * edges =====\n");
+  printf("===== printing matrix * mult =====");
+  print_matrix(mult);
 
+  printf("===== adding edges to matrix * edges =====\n");
   add_edge(edges, 50.0,50.0,0.0,100.0,50.0,0.0);
   add_edge(edges, 100.0,50.0,0.0,100.0,100.0,0.0);
-  add_edge(edges,100.0,100.0,0.0,50.0,100.0,0.0);
-  add_edge(edges,50.0, 100.0, 0.0,50.0, 50.0, 0.0);
+  //add_edge(edges,100.0,100.0,0.0,50.0,100.0,0.0);
+  //add_edge(edges,50.0, 100.0, 0.0,50.0, 50.0, 0.0);
 
-  printf("===== printing matrix * edges =====\n");
+  printf("===== printing matrix * edges =====");
   print_matrix(edges);
 
   printf("===== testing matrix multiplication: edges * mult =====\n");
-  matrix_mult(mult, edges);
+  matrix_mult(edges, mult);
 
-  printf("===== printing matrix * edges =====\n");
-  print_matrix(edges);
+  printf("===== printing matrix * mult =====");
+  print_matrix(mult);
 
-  printf("===== generating image matrix * edges =====\n");
-  draw_lines(edges, s, c);
+  printf("===== testing matrix multiplication: mult * other (now ident)=====\n");
+  matrix_mult(other, mult);
+
+  printf("===== printing matrix * mult =====\n");
+  printf("===== should be the same as above! =====");
+  print_matrix(mult);
+
+  printf("===== generating image!=====\n");
+  //draw_lines(edges, s, c);
+  //BELIEVER -- IMAGINE DRAGONS
+
+  //orange pillar 
   display(s);
 
   free_matrix(edges);

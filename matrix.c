@@ -17,7 +17,7 @@ void print_matrix(struct matrix *m) {
   for(r = 0; r < m->rows; r++){
     printf("\n");
     for(c = 0; c < max_col; c++){
-      printf("%f\t", m->m[r][c]);
+      printf("%.2f\t", m->m[r][c]);
     }
   }
   printf("\n");
@@ -57,7 +57,7 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
   for(r = 0; r < b->rows; r++){
     for(c = 0; c < b->lastcol; c++){
       for(s = 0; s < b->rows; s++){
-        sum += a->m[r][s] + b->m[s][c];
+        sum += a->m[r][s] * b->m[s][c];
       }
       b->m[r][c] = sum;
       sum = 0.0;

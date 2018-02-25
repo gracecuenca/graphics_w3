@@ -143,6 +143,10 @@ int main() {
 
   //mountains
   struct matrix* mountains = new_matrix(4,4);
+  struct matrix* shadow = new_matrix(4,4);
+  struct matrix* light = new_matrix(4,4);
+
+  //dark
   c.red = 140;
   c.green = 86;
   c.blue = 86;
@@ -151,15 +155,65 @@ int main() {
   add_edge(mountains,150.0,200.0,0.0,125.0,100.0,0.0);
   add_edge(mountains,150.0,200.0,0.0,250.0,100.0,0.0);
 
+  //shadowed
+  double shade = 125.0;
+  while(shade < 250.0){
+    add_edge(shadow,150.0,200.0,0.0,shade,100.0,0.0);
+    shade+=1.0;
+  }
+
   add_edge(mountains,200.0,200.0,0.0,300.0,300.0,0.0);
   add_edge(mountains,300.0,300.0,0.0,275.0,200.0,0.0);
   add_edge(mountains,300.0,300.0,0.0,400.0,200.0,0.0);
+
+  //shadowed
+  shade = 275.0;
+  while(shade < 400.0){
+    add_edge(shadow,300.0,300.0,0.0,shade,200.0,0.0);
+    shade+=1.0;
+  }
 
   add_edge(mountains,300.0,150.0,0.0,400.0,250.0,0.0);
   add_edge(mountains,400.0,250.0,0.0,375.0,150.0,0.0);
   add_edge(mountains,400.0,250.0,0.0,500.0,150.0,0.0);
 
+  //shadowed
+  shade = 375.0;
+  while(shade < 500.0){
+    add_edge(shadow,400.0,250.0,0.0,shade,150.0,0.0);
+    shade+=1.0;
+  }
+
   draw_lines(mountains,s,c);
+  draw_lines(shadow,s,c);
+
+  //light
+  c.red = 191;
+  c.green = 202;
+  c.blue = 226;
+
+  //light
+  double lighten = 50.0;
+  while(lighten < 125.0){
+    add_edge(light,150.0,200.0,0.0,lighten,100.0,0.0);
+    lighten+=1.0;
+  }
+
+  //light
+  lighten = 200.0;
+  while(lighten < 275.0){
+    add_edge(light,300.0,300.0,0.0,lighten,200.0,0.0);
+    lighten+=1.0;
+  }
+
+  //light
+  lighten = 300.0;
+  while(lighten < 375.0){
+    add_edge(light,400.0,250.0,0.0,lighten,150.0,0.0);
+    lighten+=1.0;
+  }
+
+  draw_lines(light,s,c);
 
   display(s);
 
@@ -171,4 +225,6 @@ int main() {
   free_matrix(b_pillar);
   free_matrix(g_pillar);
   free_matrix(mountains);
+  free_matrix(shadow);
+  free_matrix(light);
 }

@@ -215,6 +215,8 @@ int main() {
 
   draw_lines(light,s,c);
 
+  save_extension(s, "image.jpg");
+
   display(s);
 
   free_matrix(edges);

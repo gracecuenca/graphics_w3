@@ -24,4 +24,5 @@ run: main
 
 clean:
 	rm main
+	rm image.jpg
 	rm *.o *~
